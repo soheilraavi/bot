@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="fa">
+<head>
+    <meta charset="UTF-8">
+    <title>سفارش‌ها</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100">
+    <div class="container mx-auto p-6">
+        <div class="flex justify-between items-center mb-6">
+            <h1 class="text-3xl font-bold">📥 سفارش‌ها</h1>
+            <a href="/dashboard" class="bg-gray-500 text-white px-4 py-2 rounded">بازگشت</a>
+        </div>
+        <div class="bg-white rounded-lg shadow overflow-x-auto">
+            <table class="w-full">
+                <thead class="bg-gray-100">
+                    <tr>
+                        <th class="p-3">ID</th>
+                        <th class="p-3">کاربر</th>
+                        <th class="p-3">پلن</th>
+                        <th class="p-3">مبلغ</th>
+                        <th class="p-3">وضعیت</th>
+                        <th class="p-3">تاریخ</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for o in orders %}
+                    <tr class="border-t">
+                        <td class="p-3">{{ o[0] }}</td>
+                        <td class="p-3">{{ o[1] }}</td>
+                        <td class="p-3">{{ o[2] }}</td>
+                        <td class="p-3">{{ "{:,}".format(o[4]) }}</td>
+                        <td class="p-3">{{ o[5] }}</td>
+                        <td class="p-3">{{ o[7][:10] if o[7] else '-' }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+</html>

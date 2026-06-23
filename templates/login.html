@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="fa">
+<head>
+    <meta charset="UTF-8">
+    <title>ورود ادمین</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 flex items-center justify-center min-h-screen">
+    <div class="bg-white p-8 rounded-lg shadow-lg w-96">
+        <h1 class="text-2xl font-bold mb-6 text-center">👑 ورود ادمین</h1>
+        {% if error %}
+        <div class="bg-red-100 text-red-700 p-3 rounded mb-4">{{ error }}</div>
+        {% endif %}
+        <form method="post">
+            <input type="password" name="password" placeholder="رمز عبور" class="w-full p-3 border rounded mb-4" required>
+            <button type="submit" class="w-full bg-blue-500 text-white p-3 rounded hover:bg-blue-600">ورود</button>
+        </form>
+    </div>
+</body>
+</html>

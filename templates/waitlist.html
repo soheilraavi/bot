@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="fa">
+<head>
+    <meta charset="UTF-8">
+    <title>لیست انتظار</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100">
+    <div class="container mx-auto p-6">
+        <div class="flex justify-between items-center mb-6">
+            <h1 class="text-3xl font-bold">🎯 لیست انتظار</h1>
+            <a href="/dashboard" class="bg-gray-500 text-white px-4 py-2 rounded">بازگشت</a>
+        </div>
+        <div class="bg-white rounded-lg shadow overflow-x-auto">
+            <table class="w-full">
+                <thead class="bg-gray-100">
+                    <tr>
+                        <th class="p-3">ID</th>
+                        <th class="p-3">کاربر</th>
+                        <th class="p-3">پلن</th>
+                        <th class="p-3">وضعیت</th>
+                        <th class="p-3">تاریخ</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for w in waitlist %}
+                    <tr class="border-t">
+                        <td class="p-3">{{ w[0] }}</td>
+                        <td class="p-3">{{ w[7] or w[8] or '-' }}</td>
+                        <td class="p-3">{{ w[9] or '-' }}</td>
+                        <td class="p-3">{{ '🔔 اطلاع‌رسانی شده' if w[4] else '⏳ در انتظار' }}</td>
+                        <td class="p-3">{{ w[5][:10] if w[5] else '-' }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+</html>

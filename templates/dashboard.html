@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="fa">
+<head>
+    <meta charset="UTF-8">
+    <title>داشبورد ادمین</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body class="bg-gray-100">
+    <div class="container mx-auto p-6">
+        <div class="flex justify-between items-center mb-6">
+            <h1 class="text-3xl font-bold">👑 داشبورد ادمین</h1>
+            <a href="/logout" class="bg-red-500 text-white px-4 py-2 rounded">خروج</a>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
+            <div class="bg-white p-6 rounded-lg shadow">
+                <h3 class="text-gray-500 text-sm">کل کاربران</h3>
+                <p class="text-3xl font-bold">{{ stats.total_users }}</p>
+                <p class="text-green-500 text-sm">+{{ stats.today_users }} امروز</p>
+            </div>
+            <div class="bg-white p-6 rounded-lg shadow">
+                <h3 class="text-gray-500 text-sm">کل سفارش‌ها</h3>
+                <p class="text-3xl font-bold">{{ stats.total_orders }}</p>
+                <p class="text-green-500 text-sm">+{{ stats.today_orders }} امروز</p>
+            </div>
+            <div class="bg-white p-6 rounded-lg shadow">
+                <h3 class="text-gray-500 text-sm">درآمد کل</h3>
+                <p class="text-3xl font-bold">{{ "{:,}".format(stats.total_revenue) }} ت</p>
+                <p class="text-green-500 text-sm">{{ "{:,}".format(stats.today_revenue) }} امروز</p>
+            </div>
+            <div class="bg-white p-6 rounded-lg shadow">
+                <h3 class="text-gray-500 text-sm">اکانت موجود</h3>
+                <p class="text-3xl font-bold">{{ stats.free_accounts }}</p>
+                <p class="text-orange-500 text-sm">{{ stats.open_tickets }} تیکت باز</p>
+            </div>
+        </div>
+        <div class="bg-white p-6 rounded-lg shadow mb-6">
+            <h2 class="text-xl font-bold mb-4">📊 نمودار فروش ۳۰ روز اخیر</h2>
+            <canvas id="salesChart"></canvas>
+        </div>
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+            <a href="/orders" class="bg-blue-500 text-white p-4 rounded-lg text-center hover:bg-blue-600">📥 سفارش‌ها</a>
+            <a href="/accounts" class="bg-green-500 text-white p-4 rounded-lg text-center hover:bg-green-600">📦 اکانت‌ها</a>
+            <a href="/users" class="bg-purple-500 text-white p-4 rounded-lg text-center hover:bg-purple-600">👥 کاربران</a>
+            <a href="/waitlist" class="bg-orange-500 text-white p-4 rounded-lg text-center hover:bg-orange-600">🎯 لیست انتظار ({{ stats.waitlist_count }})</a>
+        </div>
+    </div>
+    <script>
+        const ctx = document.getElementById('salesChart').getContext('2d');
+        new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: {{ labels | tojson }},
+                datasets: [{
+                    label: 'تعداد فروش',
+                    data: {{ counts | tojson }},
+                    borderColor: 'rgb(59, 130, 246)',
+                    tension: 0.1
+                }, {
+                    label: 'درآمد',
+                    data: {{ revenues | tojson }},
+                    borderColor: 'rgb(16, 185, 129)',
+                    tension: 0.1,
+                    yAxisID: 'y1'
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    y: { beginAtZero: true },
+                    y1: { beginAtZero: true, position: 'right' }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
